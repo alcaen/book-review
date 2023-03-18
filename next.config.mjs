@@ -18,5 +18,24 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  images: {
+    remotePatterns: [
+      // https://i.imgur.com/zldZhzF.png
+      // IMGURU logo
+      {
+        protocol: "https",
+        hostname: "upload.wikimedia.org",
+        // port: '',
+        pathname: "/**",
+      },
+      {
+        // https://api.dicebear.com/5.x/big-smile/svg?seed=Alcaen
+        protocol: "https",
+        hostname: "api.dicebear.com",
+        // port: '',
+        pathname: "/**",
+      },
+    ],
+  },
 };
 export default config;

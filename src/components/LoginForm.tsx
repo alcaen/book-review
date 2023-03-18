@@ -1,4 +1,7 @@
+import Link from "next/link";
 import { type Dispatch, type SetStateAction } from "react";
+import { z } from "zod";
+import { Button } from "./ui/button";
 
 interface LoginFormProps {
   email: string;
@@ -15,12 +18,17 @@ const LoginForm: React.FC<LoginFormProps> = ({
   setPassword,
   submit,
 }) => {
+  const zodValidation = z.object({
+    email: z.string().email().min(1),
+    password: z.string().min(3),
+  });
+
   return (
-    <div className="flex max-w-md flex-col rounded-md bg-gray-900 p-6 text-gray-100 sm:p-10">
+    <div className="flex max-w-md flex-col rounded-md bg-gray-200/95 p-6 text-gray-900 sm:p-10">
       <div className="mb-8 text-center">
-        <h1 className="my-3 text-4xl font-bold">Sign Up</h1>
-        <p className="text-sm text-gray-400">
-          Sign up to create your own account
+        <h1 className="my-3 text-4xl font-bold">Sign In</h1>
+        <p className="text-sm font-medium text-gray-800">
+          Sign In to interact with the application
         </p>
       </div>
       <form
@@ -30,7 +38,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
       >
         <div className="space-y-4">
           <div>
-            <label htmlFor="email" className="mb-2 block text-sm">
+            <label htmlFor="email" className="mb-2 block text-sm font-bold">
               Email address
             </label>
             <input
@@ -38,14 +46,14 @@ const LoginForm: React.FC<LoginFormProps> = ({
               name="email"
               id="email"
               placeholder="leroy@jenkins.com"
-              className="w-full rounded-md border border-gray-700 bg-gray-900 px-3 py-2 text-gray-100"
+              className="w-full rounded-md border border-gray-900 bg-gray-300 px-3 py-2 text-gray-900"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div>
             <div className="mb-2 flex justify-between">
-              <label htmlFor="password" className="text-sm">
+              <label htmlFor="password" className="text-sm font-bold">
                 Password
               </label>
             </div>
@@ -54,7 +62,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
               name="password"
               id="password"
               placeholder="*****"
-              className="w-full rounded-md border border-gray-700 bg-gray-900 px-3 py-2 text-gray-100"
+              className="w-full rounded-md border border-gray-900 bg-gray-300 px-3 py-2 text-gray-900"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -62,25 +70,26 @@ const LoginForm: React.FC<LoginFormProps> = ({
         </div>
         <div className="space-y-2">
           <div>
-            <button
+            <Button
               type="button"
-              className="w-full rounded-md bg-sky-400 px-8 py-3 font-semibold text-gray-900 transition hover:scale-105"
+              className="w-full"
+              disabled={!zodValidation.safeParse({ email, password }).success}
               onClick={(e) => {
                 e.preventDefault(), submit();
               }}
             >
-              Sign Up
-            </button>
+              Log In
+            </Button>
           </div>
-          <p className="px-6 text-center text-sm text-gray-400">
-            Already registered?{" "}
-            <a
+          <p className="px-6 text-center text-sm font-medium text-gray-800">
+            Don{"'"}t have an account?{" "}
+            <Link
               rel="noopener noreferrer"
-              href="#"
-              className="text-sky-400 hover:underline"
+              href="/register"
+              className="text-sky-500 hover:underline"
             >
-              Sign In
-            </a>
+              Sign Up
+            </Link>
             .
           </p>
         </div>

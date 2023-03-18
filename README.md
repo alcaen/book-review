@@ -71,3 +71,41 @@ Aquí hay algunos recursos que pueden ayudarlo a aprender cómo construir la apl
 - PlanetScale: **[https://docs.planetscale.com/](https://docs.planetscale.com/)**
 - Vercel: **[https://vercel.com/docs](https://vercel.com/docs)**
 - GitHub: **[https://docs.github.com/en](https://docs.github.com/en)**
+
+# Resumen
+
+## Puntos a completar
+
+### Obligatorios
+
+- [x] Pagina inicio
+- [x] Mostrar lista de libros
+- [x] Buscar libros
+- [x] Ver detalles de cada libro ( **titulo**, **resumen**, **autor**, **categoria**, imagen,link a wikipedia,promedio de valoracion,total de reseñas)
+- [x] Valorar libro
+- [x] Dejar reseña del libro
+- [x] Ver otras reseñas ordenadas por mas recientes
+- [x] Registrar usuarios
+- [x] Autenticar usuarios
+- [x] Cerrar session
+- [x] Protejer funciones (reseñas y valoracion)
+- [x] App bonita y facil de usar
+- [ ] Alojamiento
+- [ ] CI/CD
+
+### Opcionales
+
+- [x] Filtros (**categoria**, author)
+- [ ] Editar reseñas
+- [x] Editar valoracion
+- [x] Ver perfil (**correo**, **imagen**, **nombre**)
+- [x] Protejer rutas (perfil)
+- [x] Restablecer contraseña
+
+### Entregar
+
+- [x] Github publico
+- [x] README
+- [ ] Demostracion en vivo
+
+### Herramientas usadas

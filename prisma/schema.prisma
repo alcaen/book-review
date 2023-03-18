@@ -27,4 +27,39 @@ model User {
     password      String?
     emailVerified DateTime?
     image         String?
+    Review        Review[]
+    Score         Score[]
+}
+
+model Book {
+    id       String   @id @default(cuid())
+    title    String
+    author   String
+    category String
+    resumen  String   @db.Text
+    imageURL String
+    URL      String
+    Score    Score[]
+    Review   Review[]
+}
+
+model Review {
+    id        String   @id @default(cuid())
+    user      User     @relation(fields: [userId], references: [id])
+    userId    String
+    text      String
+    book      Book     @relation(fields: [bookId], references: [id])
+    bookId    String
+    createdAt DateTime @default(now())
+}
+
+model Score {
+    id     String @id @default(cuid())
+    user   User   @relation(fields: [userId], references: [id])
+    userId String
+    book   Book   @relation(fields: [bookId], references: [id])
+    bookId String
+    score  Int
+
+    @@unique([bookId, userId])
 }

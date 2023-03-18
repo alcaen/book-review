@@ -1,4 +1,9 @@
+import { Check, Info, X } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { type Dispatch, type SetStateAction, useState } from "react";
+import { z } from "zod";
+import { Button } from "./ui/button";
 
 interface RegisterFormProps {
   email: string;
@@ -19,12 +24,21 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
   setPassword,
   submit,
 }) => {
+  const router = useRouter();
   const [repeatPass, setRepeatPass] = useState("");
+
+  const zodValidation = z.object({
+    email: z.string().email().min(1),
+    name: z.string().min(1),
+    password: z.string().min(3),
+    repPassword: z.string().min(3),
+  });
+
   return (
-    <div className="flex max-w-md flex-col rounded-md bg-gray-900 p-6 text-gray-100 sm:p-10">
+    <div className="flex max-w-md flex-col rounded-md bg-gray-200/95 p-6 text-gray-800  sm:p-10">
       <div className="mb-8 text-center">
         <h1 className="my-3 text-4xl font-bold">Sign Up</h1>
-        <p className="text-sm text-gray-400">
+        <p className="text-sm font-medium text-gray-800">
           Sign up to create your own account
         </p>
       </div>
@@ -35,7 +49,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
       >
         <div className="space-y-4">
           <div>
-            <label htmlFor="name" className="mb-2 block text-sm">
+            <label htmlFor="name" className="mb-2 block text-sm font-bold">
               Nickname
             </label>
             <input
@@ -43,13 +57,13 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
               name="name"
               id="name"
               placeholder="Leroy Jenkins"
-              className="w-full rounded-md border border-gray-700 bg-gray-900 px-3 py-2 text-gray-100"
+              className="w-full rounded-md border border-gray-800 bg-gray-200 px-3 py-2 text-gray-800"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div>
-            <label htmlFor="email" className="mb-2 block text-sm">
+            <label htmlFor="email" className="mb-2 block text-sm font-bold">
               Email address
             </label>
             <input
@@ -57,65 +71,84 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
               name="email"
               id="email"
               placeholder="leroy@jenkins.com"
-              className="w-full rounded-md border border-gray-700 bg-gray-900 px-3 py-2 text-gray-100"
+              className="w-full rounded-md border border-gray-800 bg-gray-200 px-3 py-2 text-gray-800"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div>
             <div className="mb-2 flex justify-between">
-              <label htmlFor="password" className="text-sm">
+              <label htmlFor="password" className="text-sm font-bold">
                 Password
               </label>
             </div>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="*****"
-              className="w-full rounded-md border border-gray-700 bg-gray-900 px-3 py-2 text-gray-100"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className="flex items-center justify-between gap-1 transition">
+              <input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="*****"
+                className="w-full rounded-md border border-gray-800 bg-gray-200 px-3 py-2 text-gray-800"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              {repeatPass === password && password !== "" ? (
+                <Check className="text-green-600" />
+              ) : password === "" ? (
+                <Info />
+              ) : (
+                <X className="text-red-600" />
+              )}
+            </div>
           </div>
           <div>
             <div className="mb-2 flex justify-between">
-              <label htmlFor="password" className="text-sm">
+              <label htmlFor="password" className="text-sm font-bold">
                 Repeat password
               </label>
             </div>
-            <input
-              type="password"
-              name="repeat-password"
-              id="repeat-password"
-              placeholder="*****"
-              className="w-full rounded-md border border-gray-700 bg-gray-900 px-3 py-2 text-gray-100"
-              value={repeatPass}
-              onChange={(e) => setRepeatPass(e.target.value)}
-            />
+            <div className="flex items-center justify-between gap-1 transition">
+              <input
+                type="password"
+                name="repeat-password"
+                id="repeat-password"
+                placeholder="*****"
+                className="w-full rounded-md border border-gray-800 bg-gray-200 px-3 py-2 text-gray-800"
+                value={repeatPass}
+                onChange={(e) => setRepeatPass(e.target.value)}
+              />
+            </div>
           </div>
         </div>
         <div className="space-y-2">
           <div>
-            <button
+            <Button
               type="button"
-              className="w-full rounded-md bg-sky-400 px-8 py-3 font-semibold text-gray-900 transition hover:scale-105"
+              className="w-full"
               onClick={(e) => {
                 e.preventDefault(), submit();
               }}
+              disabled={
+                !zodValidation.safeParse({
+                  email,
+                  name,
+                  password,
+                  repPassword: repeatPass,
+                }).success || password !== repeatPass
+              }
             >
               Sign Up
-            </button>
+            </Button>
           </div>
-          <p className="px-6 text-center text-sm text-gray-400">
+          <p className="px-6 text-center text-sm font-semibold text-gray-800">
             Already registered?{" "}
-            <a
+            <Link
               rel="noopener noreferrer"
-              href="#"
-              className="text-sky-400 hover:underline"
+              href="/login"
+              className="text-sky-500 hover:underline"
             >
               Sign In
-            </a>
+            </Link>
             .
           </p>
         </div>
