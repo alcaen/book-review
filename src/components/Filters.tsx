@@ -1,12 +1,17 @@
-import { api } from "@/utils/api";
-import { Dispatch, SetStateAction, useState } from "react";
+// Imports
+// Types
+import type { Dispatch, SetStateAction } from "react";
+// Components
 import Filter from "./Filter";
-
+// Functionals
+import { api } from "@/utils/api";
+import { useState } from "react";
+// Interface
 interface FiltersProps {
   setCurrentCategory: Dispatch<SetStateAction<string | undefined>>;
   setCurrentAuthor: Dispatch<SetStateAction<string | undefined>>;
 }
-
+// Component
 const Filters: React.FC<FiltersProps> = ({
   setCurrentAuthor,
   setCurrentCategory,

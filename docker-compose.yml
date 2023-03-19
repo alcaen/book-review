@@ -1,0 +1,45 @@
+# version: "3.9"
+# services:
+#   app:
+#     container_name: Book_Review
+#     platform: "linux/amd64"
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#       args:
+#         NEXT_PUBLIC_CLIENTVAR: "clientvar"
+#     working_dir: /app
+#     ports:
+#       - "3000:3000"
+#     image: t3-app
+#     environment:
+#       - DATABASE_URL=""
+#     depends_on:
+#       - db
+#     networks:
+#       - connection
+#   db:
+#     container_name: Database
+#     image: mysql:8.0
+#     restart: always
+#     ports:
+#       - "3306:3306"
+#     networks:
+#       - connection
+#     environment:
+#       MYSQL_DATABASE: bookreview
+#       MYSQL_ROOT_PASSWORD: bookreview
+
+# networks:
+#   connection:
+#     driver: bridge
+
+version: "3.8"
+services:
+  app:
+    container_name: Book_Review
+    build: .
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env

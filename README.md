@@ -90,22 +90,22 @@ Aquí hay algunos recursos que pueden ayudarlo a aprender cómo construir la apl
 - [x] Cerrar session
 - [x] Protejer funciones (reseñas y valoracion)
 - [x] App bonita y facil de usar
-- [ ] Alojamiento
+- [x] Alojamiento
 - [ ] CI/CD
 
 ### Opcionales
 
 - [x] Filtros (**categoria**, author)
-- [ ] Editar reseñas
+- [x] Editar reseñas
+- [x] Eliminar reseñas
 - [x] Editar valoracion
 - [x] Ver perfil (**correo**, **imagen**, **nombre**)
 - [x] Protejer rutas (perfil)
 - [x] Restablecer contraseña
+- [x] Cambiar contraseña
 
 ### Entregar
 
 - [x] Github publico
-- [x] README
-- [ ] Demostracion en vivo
-
-### Herramientas usadas
+- [ ] README
+- [x] Demostracion en vivo

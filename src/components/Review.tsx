@@ -1,3 +1,8 @@
+// Imports
+// Types
+import type { Book, User } from "@prisma/client";
+import { type Session } from "next-auth";
+// UI Component Primitives
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -8,32 +13,22 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
-import { Star } from "lucide-react";
-import { type Session } from "next-auth";
-import { useState } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import ReviewCard from "./ReviewCard";
-import { api } from "@/utils/api";
-import type { Book, Review, User } from "@prisma/client";
-
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { Label } from "./ui/label";
-import Link from "next/link";
 import { Textarea } from "./ui/textarea";
-
-export default function Review({
-  child,
-  review,
-  bookId,
-  session,
-  title,
-}: {
+// Icons
+import { X } from "lucide-react";
+// Components
+import ReviewCard from "./ReviewCard";
+// Functionals
+import { Review } from "@prisma/client";
+import { useState } from "react";
+import { api } from "@/utils/api";
+import { useToast } from "@/hooks/use-toast";
+import Link from "next/link";
+import { useRouter } from "next/router";
+// Interface
+interface ReviewInterface {
   child: JSX.Element;
   bookId: string;
   session: Session | null;
@@ -47,7 +42,15 @@ export default function Review({
     review: string;
     reviewId?: string | undefined;
   }) => void;
-}) {
+}
+// Component
+const Review: React.FC<ReviewInterface> = ({
+  child,
+  review,
+  bookId,
+  session,
+  title,
+}) => {
   const [text, setText] = useState<string>("");
   const [reviewId, setReviewId] = useState<string>("");
   const [bookReviews, setBookReviews] = useState<
@@ -69,6 +72,38 @@ export default function Review({
     }
   );
 
+  const deleteReview = api.book.deleteReview.useMutation({});
+
+  const utils = api.useContext();
+  const router = useRouter();
+  const { toast } = useToast();
+
+  const handleDelete = (reviewId: string) => {
+    deleteReview.mutate(
+      { currentUserId: session?.user.id ? session?.user.id : "", reviewId },
+      {
+        async onSuccess(data, variables, context) {
+          await utils.book.getAllReviews.cancel({ bookId: data.bookId });
+          await utils.book.getNumberReviews.cancel({ bookId: data.bookId });
+          await utils.book.getAllReviews.invalidate({ bookId: data.bookId });
+          await utils.book.getNumberReviews.invalidate({ bookId: data.bookId });
+
+          toast({
+            title: `${reviewId} successfully deleted.`,
+            duration: 4000,
+          });
+        },
+        onError(error, variables, context) {
+          toast({
+            variant: "destructive",
+            title: "Uh oh! Something went wrong.",
+            description: error.message,
+          });
+        },
+      }
+    );
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>{child}</DialogTrigger>
@@ -82,7 +117,14 @@ export default function Review({
         {bookReviews !== undefined ? (
           <div className="max-h-40 overflow-y-scroll  rounded-lg border border-gray-400 px-2">
             {bookReviews.map((review) => (
-              <ReviewCard key={review.id} review={review} />
+              <ReviewCard
+                key={review.id}
+                review={review}
+                session={session}
+                setReviewId={setReviewId}
+                setText={setText}
+                handleDelete={handleDelete}
+              />
             ))}
           </div>
         ) : (
@@ -94,7 +136,21 @@ export default function Review({
         )}
         {session ? (
           <div className="grid w-full gap-1.5">
-            <Label htmlFor="message">Your review</Label>
+            {reviewId ? (
+              <div className="flex items-center justify-between">
+                <Label htmlFor="message">Editing review: {reviewId}</Label>
+                <X
+                  className="text-red-600 hover:cursor-pointer hover:fill-red-500/50"
+                  onClick={() => {
+                    setReviewId(""), setText("");
+                  }}
+                />
+              </div>
+            ) : (
+              // <Trash/>
+              <Label htmlFor="message">Your review</Label>
+            )}
+
             <Textarea
               placeholder="Type your message here."
               id="message"
@@ -116,9 +172,14 @@ export default function Review({
               onClick={() => {
                 review({ bookId, review: text, reviewId: reviewId });
                 setText("");
+                setReviewId("");
               }}
             >
-              <Button> Save changes</Button>
+              {reviewId ? (
+                <Button> Save changes</Button>
+              ) : (
+                <Button> Create review</Button>
+              )}
             </DialogPrimitive.Close>
           </DialogFooter>
         ) : (
@@ -133,4 +194,6 @@ export default function Review({
       </DialogContent>
     </Dialog>
   );
-}
+};
+
+export default Review;

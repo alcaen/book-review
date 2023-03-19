@@ -1,10 +1,15 @@
-import { Check, Info, X } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { type Dispatch, type SetStateAction, useState } from "react";
-import { z } from "zod";
+// Imports
+// Types
+import type { Dispatch, SetStateAction } from "react";
+// UI Component Primitives
 import { Button } from "./ui/button";
-
+// Icons
+import { Check, Info, X } from "lucide-react";
+// Functionals
+import { useState } from "react";
+import Link from "next/link";
+import { z } from "zod";
+// Interface
 interface RegisterFormProps {
   email: string;
   password: string;
@@ -14,7 +19,7 @@ interface RegisterFormProps {
   setName: Dispatch<SetStateAction<string>>;
   submit: () => void;
 }
-
+// Component
 const RegisterForm: React.FC<RegisterFormProps> = ({
   email,
   name,
@@ -24,7 +29,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
   setPassword,
   submit,
 }) => {
-  const router = useRouter();
   const [repeatPass, setRepeatPass] = useState("");
 
   const zodValidation = z.object({

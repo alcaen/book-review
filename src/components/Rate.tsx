@@ -1,3 +1,7 @@
+// Imports
+// Types
+import { type Session } from "next-auth";
+// UI Component Primitives
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -8,25 +12,28 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
-import { Star } from "lucide-react";
-import { type Session } from "next-auth";
-import { useState } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-
-export default function Rate({
-  child,
-  score,
-  bookId,
-  session,
-  title,
-}: {
+// Icons
+import { Star } from "lucide-react";
+// Components
+// Functionals
+import { useState } from "react";
+// Interface
+interface RateInterface {
   child: JSX.Element;
   score: ({ bookId, score }: { bookId: string; score: number }) => void;
   bookId: string;
   session: Session;
   title: string;
-}) {
+}
+// Component
+const Rate: React.FC<RateInterface> = ({
+  child,
+  score,
+  bookId,
+  session,
+  title,
+}) => {
   const [stars, setStars] = useState<number>(0);
   const [hoverStars, setHoverStars] = useState<number>(0);
 
@@ -115,4 +122,6 @@ export default function Rate({
       </DialogContent>
     </Dialog>
   );
-}
+};
+
+export default Rate;

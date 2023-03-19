@@ -1,14 +1,16 @@
+// trpc error to hanlde and send erros
 import { TRPCError } from "@trpc/server";
+// for validation and typescript in exteroids
 import { z } from "zod";
-import { hash } from "bcrypt";
-
+// router, public api route, protectted api route
 import {
   createTRPCRouter,
   publicProcedure,
   protectedProcedure,
 } from "@/server/api/trpc";
-
+// book router where i handle the book actions like review, score, delete and get all kind of details
 export const bookRouter = createTRPCRouter({
+  // get books to render and if an input is specified filter it. otherwise get all books
   getAllBooks: publicProcedure
     .input(
       z.object({
@@ -72,7 +74,7 @@ export const bookRouter = createTRPCRouter({
         }
       }
     }),
-
+  // get all unique categoriers of the books used to give the filter category names
   getAllCategories: publicProcedure.query(async ({ ctx }) => {
     const categories = await ctx.prisma.book.findMany({
       select: { category: true },
@@ -87,7 +89,7 @@ export const bookRouter = createTRPCRouter({
       return categories;
     }
   }),
-
+  // get all unique authors of the books used to give the filter author names
   getAllAuthors: publicProcedure.query(async ({ ctx }) => {
     const authors = await ctx.prisma.book.findMany({
       select: { author: true },
@@ -102,7 +104,7 @@ export const bookRouter = createTRPCRouter({
       return authors;
     }
   }),
-
+  // used to get the average score of a specifig book this uses prisma agregate
   getScoreBook: publicProcedure
     .input(z.object({ bookId: z.string().min(1) }))
     .query(async ({ ctx, input }) => {
@@ -120,7 +122,7 @@ export const bookRouter = createTRPCRouter({
         return score;
       }
     }),
-
+  // get the total number of review of a specifig book this uses prisma agregate
   getNumberReviews: publicProcedure
     .input(z.object({ bookId: z.string().min(1) }))
     .query(async ({ ctx, input }) => {
@@ -138,7 +140,7 @@ export const bookRouter = createTRPCRouter({
         return numberReviews;
       }
     }),
-
+  // mutation to handle the score from an  specific user
   scoreBook: protectedProcedure
     .input(
       z.object({
@@ -166,7 +168,7 @@ export const bookRouter = createTRPCRouter({
       });
       return scoredBook;
     }),
-
+  // used to get the list of all reviews
   getAllReviews: publicProcedure
     .input(z.object({ bookId: z.string().min(1) }))
     .query(async ({ ctx, input }) => {
@@ -185,7 +187,7 @@ export const bookRouter = createTRPCRouter({
         return reviews;
       }
     }),
-
+  // used to review a book it uses upsert means: update if exists or create if dont
   reviewBook: protectedProcedure
     .input(
       z.object({
@@ -210,5 +212,36 @@ export const bookRouter = createTRPCRouter({
         include: { book: true, user: true },
       });
       return review;
+    }),
+  // used to delete a certain review
+  deleteReview: protectedProcedure
+    .input(
+      z.object({
+        reviewId: z.string().min(1),
+        currentUserId: z.string().min(1),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const review = await ctx.prisma.review.findUnique({
+        where: { id: input.reviewId },
+      });
+      if (!review) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Review Not Found",
+          cause: "Review Not Found",
+        });
+      }
+      if (review.userId !== input.currentUserId) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Thats not your review",
+          cause: "Thats not your review",
+        });
+      }
+      const deletedReview = await ctx.prisma.review.delete({
+        where: { id: input.reviewId },
+      });
+      return deletedReview;
     }),
 });

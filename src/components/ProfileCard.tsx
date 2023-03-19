@@ -1,11 +1,15 @@
-import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
-import { Mail, Phone } from "lucide-react";
+// Imports
+// Types
 import type { Session } from "next-auth";
-
+// UI Component Primitives
+import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
+// Icons
+import { Mail } from "lucide-react";
+// Interface
 interface ProfileCardProps {
   session: Session;
 }
-
+// Component
 const ProfileCard: React.FC<ProfileCardProps> = ({ session }) => {
   return (
     <div className="max-w-md rounded-md bg-gray-50 p-8 text-gray-800 shadow-lg shadow-black/70 sm:flex sm:space-x-6">

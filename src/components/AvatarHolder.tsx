@@ -1,5 +1,8 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+// Imports
+// Types
 import { type Session } from "next-auth";
+// UI Component Primitives
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,15 +11,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-import { signIn, signOut } from "next-auth/react";
+// Functionals
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-
+// Interface
 interface AvatarHolderProps {
   session: Session | null;
 }
-
+// Component
 const AvatarHolder: React.FC<AvatarHolderProps> = ({ session }) => {
   const router = useRouter();
   if (session) {
@@ -38,9 +41,9 @@ const AvatarHolder: React.FC<AvatarHolderProps> = ({ session }) => {
         <DropdownMenuContent>
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <Link href="/profile">Profile</Link>
-          </DropdownMenuItem>
+          <Link href="/profile">
+            <DropdownMenuItem>Profile</DropdownMenuItem>
+          </Link>
           {/* <DropdownMenuItem>Billing</DropdownMenuItem>
           <DropdownMenuItem>Team</DropdownMenuItem> */}
           <DropdownMenuSeparator />

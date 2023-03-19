@@ -1,8 +1,12 @@
-import Link from "next/link";
-import { type Dispatch, type SetStateAction } from "react";
-import { z } from "zod";
+// Imports
+// Types
+import type { Dispatch, SetStateAction } from "react";
+// UI Component Primitives
 import { Button } from "./ui/button";
-
+// Functionals
+import Link from "next/link";
+import { z } from "zod";
+// Interface
 interface LoginFormProps {
   email: string;
   password: string;
@@ -10,7 +14,7 @@ interface LoginFormProps {
   setPassword: Dispatch<SetStateAction<string>>;
   submit: () => void;
 }
-
+// Component
 const LoginForm: React.FC<LoginFormProps> = ({
   email,
   password,
@@ -66,6 +70,16 @@ const LoginForm: React.FC<LoginFormProps> = ({
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <p className="mt-2 text-left text-sm font-medium text-gray-800">
+              Forgot password?{" "}
+              <Link
+                rel="noopener noreferrer"
+                href="/reset_pass"
+                className="text-sky-500 hover:underline"
+              >
+                Reset it
+              </Link>
+            </p>
           </div>
         </div>
         <div className="space-y-2">

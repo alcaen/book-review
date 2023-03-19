@@ -1,17 +1,23 @@
+// Imports
+// Types
+import { type Session } from "next-auth";
+import type { Dispatch, SetStateAction } from "react";
+// UI Component Primitives
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { SidebarOpen } from "lucide-react";
-import { type Session } from "next-auth";
-import type { Dispatch, SetStateAction } from "react";
-import AvatarHolder from "./AvatarHolder";
-import Filters from "./Filters";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-
+// Icons
+import { SidebarOpen } from "lucide-react";
+// Components
+import AvatarHolder from "./AvatarHolder";
+import Filters from "./Filters";
+// Functionals
+// Interface
 interface SideMenuProps {
   session: Session | null;
   setCurrentCategory: Dispatch<SetStateAction<string | undefined>>;
@@ -19,7 +25,7 @@ interface SideMenuProps {
   search: string | undefined;
   setSearch: Dispatch<SetStateAction<string | undefined>>;
 }
-
+// Component
 const SideMenu: React.FC<SideMenuProps> = ({
   session,
   setCurrentAuthor,

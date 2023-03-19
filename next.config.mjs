@@ -7,6 +7,9 @@
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
+  // Minimize docker image
+  swcMinify: true,
+  output: "standalone",
 
   /**
    * If you have the "experimental: { appDir: true }" setting enabled, then you

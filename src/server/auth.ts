@@ -97,6 +97,7 @@ export const authOptions: NextAuthOptions = {
      * @see https://next-auth.js.org/providers/github
      */
   ],
+  // Session and authentication stratrgy used is JWT. It also could be session but it requires specific providers
   session: { strategy: "jwt" },
 };
 

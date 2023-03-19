@@ -1,30 +1,30 @@
-// Accordion
+// Imports
+// Types
+import { type Session } from "next-auth";
+// UI Component Primitives
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-// Aspect Ratio
 import { AspectRatio } from "./ui/aspect-ratio";
-// Next Image
-import Image from "next/image";
-// Icons
-import { Book, Link, MessageCircle, Star } from "lucide-react";
-// Tooltip
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useState } from "react";
+// Icons
+import { Link, MessageCircle, Star } from "lucide-react";
+// Components
 import Rate from "./Rate";
-import { useRouter } from "next/router";
-import { Session } from "next-auth";
-import { api } from "@/utils/api";
 import Review from "./Review";
-
+// Functionals
+import { api } from "@/utils/api";
+import Image from "next/image";
+import { useRouter } from "next/router";
+// Interface
 interface BookSchemaProps {
   bookId: string;
   title: string;
@@ -45,7 +45,7 @@ interface BookSchemaProps {
   }) => void;
   category: string;
 }
-
+// Component
 const BookSchema: React.FC<BookSchemaProps> = ({
   author,
   imgUrl,

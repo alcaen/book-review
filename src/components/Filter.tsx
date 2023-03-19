@@ -1,15 +1,7 @@
+// Imports
 import * as React from "react";
-import {
-  ArrowUpCircle,
-  CheckCircle2,
-  Circle,
-  HelpCircle,
-  LucideIcon,
-  XCircle,
-} from "lucide-react";
-
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+// Types
+// UI Component Primitives
 import {
   Command,
   CommandEmpty,
@@ -18,18 +10,20 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { Button } from "@/components/ui/button";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
+// Interface
 interface FilterProps {
   name: string;
   states: string[] | undefined;
   setCurrentState: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
+// Component
 const Filter: React.FC<FilterProps> = ({ name, states, setCurrentState }) => {
   const [open, setOpen] = React.useState(false);
   const [selectedStatus, setSelectedStatus] = React.useState<string | null>(
@@ -50,7 +44,7 @@ const Filter: React.FC<FilterProps> = ({ name, states, setCurrentState }) => {
             {selectedStatus ? (
               <div className="w-full text-center">{selectedStatus}</div>
             ) : (
-              <div className="w-full text-center">Set status</div>
+              <div className="w-full text-center">Set {name}</div>
             )}
           </Button>
         </PopoverTrigger>
