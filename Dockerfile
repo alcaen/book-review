@@ -4,20 +4,16 @@ WORKDIR /app
 
 COPY package*.json ./ 
 
-COPY prisma ./
+RUN npm ci
 
-RUN npm install
-
-# COPY . .
-
-ENV DATABASE_URL=""
-ENV NEXTAUTH_SECRET=""
-ENV NEXTAUTH_URL="http://localhost:3000"
+COPY . .
 
 RUN npx prisma generate
 
+ENV SKIP_ENV_VALIDATION=1
+
 RUN npm run build
 
-CMD ["npm","run","start:prod"]
+CMD ["npm","run","start:push"]
 
 EXPOSE 3000

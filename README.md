@@ -27,15 +27,23 @@ Luego ejecuta estos comandos en la terminal en el mismo orden.
 #### Produccion
 
 ```powershell
-npm install
+npm install # install packages
 ```
 
 ```powershell
-npm run build
+npx prisma generate #Generar types de typescript
 ```
 
 ```powershell
-npm run start
+npx prisma db push #Push Schema to db ( no genera migracion si se requiere migraicion correr migrate)
+```
+
+```powershell
+npm run build #build
+```
+
+```powershell
+npm run start #start
 ```
 
 [Link app](http://localhost:3000/)
@@ -51,7 +59,11 @@ npx prisma generate
 ```
 
 ```powershell
-npm run dev
+npx prisma db push
+```
+
+```powershell
+npm run dev # start on dev enviroment
 ```
 
 [Link app](http://localhost:3000/)
@@ -88,7 +100,7 @@ In progress
 - [x] Protejer funciones (reseñas y valoracion)
 - [x] App bonita y facil de usar
 - [x] Alojamiento
-- [ ] CI/CD => Estoy teniendo problemas con docker en mi computador desde que actualice a windows 11. Asi que este punto esta en desarrollo.
+- [x] CI/CD ( Docker-compose )
 
 ### Opcionales
 
