@@ -1,78 +1,43 @@
 # Proyecto Controlbox
 
-# Título del proyecto:
+### By: Alcaen
 
-Aplicación de reseñas de libros
+## Ejecucion
 
-## Descripción del proyecto:
+### Local
 
-Cree una aplicación de reseñas de libros que permita a los usuarios navegar, buscar y reseñar libros. La aplicación debe permitir a los usuarios registrarse e iniciar sesión con sus credenciales. Una vez que hayan iniciado sesión, los usuarios deberían poder navegar por una lista de libros, ver detalles de un libro, dejar reseñas para un libro y ver las reseñas dejadas por otros usuarios.
+Primero debes clonar el repositorio donde esta el codigo.
 
-La aplicación puede usar las siguientes tecnologías, pero si te sientes más cómodo con otras tecnologías que no se enumeran, úsalas:
+```powershell
+git clone https://github.com/alcaen/book-review
+```
 
-Frontend:
+Una vez clonado entras a la carpeta book-review.
+Asegurate de estar en la carpeta del projecto (la que contiene el archivo **package.json**).Creas un archivo **.env** y copias el contenido del archivo **.env.example** a este. En este archivo deje las instrucciones de como configurar las variables de entorno.
 
-- HTML, CSS, Bootstrap/Tailwind CSS
-- React o Angular, Typescript, Next.js/Node.js
-- REST APIs y GraphQL
+Luego ejecuta estos comandos en la terminal en el mismo orden.
 
-Backend:
+```powershell
+npm install
+```
 
-- PostgreSQL, MySQL
-- Go, C#, .NET
-- Bases de datos sin servidor como PlanetScale, AWS
+```powershell
+npm run build
+```
 
-Implementación:
+```powershell
+npm run start
+```
 
-- Alojamiento web sin servidor como Vercel
-- CI/CD: Github
+#### Docker
 
-## Requisitos:
+#### No Docker
 
-1. La aplicación debe tener una página de inicio que muestre una lista de libros. Los usuarios deben poder navegar por la lista de libros, buscar libros por título, autor o categoría.
-2. Los usuarios deben poder ver los detalles de un libro, incluyendo su título, autor, categoría y resumen.
-3. Los usuarios deben poder dejar reseñas para un libro, incluyendo una calificación del 1 al 5 y un comentario en texto.
-4. Los usuarios deben poder ver las reseñas dejadas por otros usuarios, ordenadas por las más recientes.
-5. La aplicación debe tener autenticación y autorización de usuarios. Los usuarios deben poder registrarse para obtener una cuenta, iniciar sesión con sus credenciales y cerrar sesión. Solo los usuarios autenticados deben poder dejar reseñas para un libro.
-6. La aplicación debe ser receptiva y accesible.
-7. La aplicación debe ser implementada en una plataforma de alojamiento y tener un pipeline de CI/CD configurado.
+### Plataforma alojamiento
 
-## Requisitos adicionales (opcional):
+#### Docker
 
-1. Los usuarios deben poder filtrar los libros por categoría.
-2. Los usuarios deben poder ver sus propias reseñas y editarlas o eliminarlas.
-3. Los usuarios deben poder ver su propio perfil con su nombre de usuario, correo electrónico y foto de perfil.
-4. Los usuarios deben poder restablecer su contraseña si la olvidan.
-
-## Para entregar:
-
-1. Código fuente de la aplicación, alojado en un repositorio Git público (por ejemplo, GitHub, Bitbucket).
-2. Un archivo README con instrucciones sobre cómo ejecutar la aplicación localmente e implementarla en una plataforma de alojamiento.
-3. Una demostración en vivo de la aplicación alojada en una plataforma de alojamiento.
-
-## Tiempo:
-
-Este proyecto debería tomar alrededor de 30 horas para completar, a un nivel de dificultad medio.
-
-## Recursos:
-
-Aquí hay algunos recursos que pueden ayudarlo a aprender cómo construir la aplicación de reseñas de libros. Todas las tecnologías son gratuitas para usar, incluyendo alojamiento y bases de datos:
-
-- React: **[https://reactjs.org/docs/getting-started.html](https://reactjs.org/docs/getting-started.html)**
-- Angular: **[https://angular.io/start](https://angular.io/start)**
-- TypeScript: **[https://www.typescriptlang.org/docs/](https://www.typescriptlang.org/docs/)**
-- Next.js: **[https://nextjs.org/docs/getting-started](https://nextjs.org/docs/getting-started)**
-- Node.js: **[https://nodejs.org/en/docs/](https://nodejs.org/en/docs/)**
-- PostgreSQL: **[https://www.postgresql.org/docs/](https://www.postgresql.org/docs/)**
-- MySQL: **[https://dev.mysql.com/doc/](https://dev.mysql.com/doc/)**
-- Go: **[https://golang.org/doc/](https://golang.org/doc/)**
-- C#: **[https://docs.microsoft.com/en-us/dotnet/csharp/](https://docs.microsoft.com/en-us/dotnet/csharp/)**
-- .NET: **[https://docs.microsoft.com/en-us/dotnet/](https://docs.microsoft.com/en-us/dotnet/)**
-- PlanetScale: **[https://docs.planetscale.com/](https://docs.planetscale.com/)**
-- Vercel: **[https://vercel.com/docs](https://vercel.com/docs)**
-- GitHub: **[https://docs.github.com/en](https://docs.github.com/en)**
-
-# Resumen
+#### Serverless
 
 ## Puntos a completar
 
