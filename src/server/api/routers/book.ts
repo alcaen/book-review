@@ -244,4 +244,40 @@ export const bookRouter = createTRPCRouter({
       });
       return deletedReview;
     }),
+  // Used to upload books, exposed to REST in pages/api/book/upload_books
+  uploadBooks: publicProcedure
+    .input(
+      z
+        .object({
+          title: z.string().min(1),
+          author: z.string().min(1),
+          category: z.string().min(1),
+          resumen: z.string().min(1),
+          imageURL: z.string().min(1),
+          URL: z.string().min(1),
+        })
+        .array()
+    )
+    .mutation(async ({ ctx, input }) => {
+      if (!input) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Yo have to add at least one book",
+          cause: "Yo have to add at least one book",
+        });
+      }
+      const newBooks = await ctx.prisma.book.createMany({
+        data: input,
+        skipDuplicates: true,
+      });
+      if (!newBooks) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "No books created",
+          cause: "No books created",
+        });
+      }
+
+      return { new_books_added: newBooks.count };
+    }),
 });
